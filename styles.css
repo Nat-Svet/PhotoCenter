@@ -1,0 +1,1187 @@
+/* нужно для проверки расположения и границ блоков
+* {
+  outline: 1px solid red !important;
+}
+*/
+
+html {
+  scroll-behavior: smooth;
+  /* плавная прокрутка  при клике на пункт меню */
+}
+
+
+body {
+  background-image: url('assets/images/background/overall_background.jpg');
+  background-repeat: repeat;
+  background-attachment: fixed;
+
+  /* Увеличиваем прозрачность до 0.97 — паттерн станет едва уловимым призраком */
+  background-color: rgba(255, 253, 235, 0.86);
+
+  /* SCREEN —  для максимального осветления пестрых текстур (у меня пестрый background image) */
+  background-blend-mode: screen;
+
+  color: #1a1a1a;
+  margin: 0;
+  width: 100%;
+  font-family: sans-serif;
+}
+
+
+/*  --- УСТАНАВЛИВАЕМ ОБЩУЮ ШИРИНУ ВСЕХ БЛОКОВ СТРАНИЦЫ ДЛЯ ДЕСКТОП ВЕРСИИ ---   */
+/* Выбираем все главные блоки-контейнеры */
+.header,
+.main,
+.footer,
+.container {
+  max-width: 1440px;
+  margin-left: auto;
+  /* центрирование: */
+  margin-right: auto;
+  /* левый и правый отступы "авто" */
+  width: 100%;
+  /* Чтобы блоки были на весь экран, пока он меньше 1440px */
+  box-sizing: border-box;
+  /* Чтобы внутренние отступы не ломали ширину */
+
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+
+
+
+/* --- РАБОТА С HEADER --- */
+header {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  gap: 30px;
+  /* расстояние между колонками */
+}
+
+
+.header_images {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+}
+
+
+.header_contacts {
+  flex: 0 1 auto;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.4;
+  min-width: fit-content;
+  /* Чтобы текст не сжимался */
+}
+
+.header_contacts p {
+  margin: 2px 0;
+  white-space: nowrap;
+  /* Запрет переноса адреса и телефона */
+}
+
+
+.header_menu {
+  flex: 2;
+  /* Занимает в 2 раза больше места, чем остальные */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header_menu_items {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  flex-wrap: nowrap;
+  /* запрещает перенос элементов на новую строку */
+}
+
+.header_menu_items li a {
+  text-decoration: none;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  white-space: nowrap;
+  /* Запрещает перенос слов внутри одной ссылки */
+  transition: all 0.3s ease;
+}
+
+.header_menu_items li a:hover {
+  transform: scale(1.1) translateY(-3px);
+}
+
+
+/* --- АДАПТАЦИЯ HEADER --- */
+
+
+/* --- АДАПТАЦИЯ HEADER ДЛЯ ПЛАНШЕТНОЙ ВЕРСИИ (Три колонки, меню вертикально) --- */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .header {
+    justify-content: space-between;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  /* Фиксируем ширину крайних колонок, чтобы контакты были строго по центру */
+  .header_images,
+  .header_menu {
+    flex: 1;
+  }
+
+  .header_contacts {
+    flex: 0 0 auto;
+    /* Центральная колонка не растягивается */
+    margin: 0;
+  }
+
+  .header_menu {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Делаем пункты меню вертикально и прижимаем вправо */
+  .header_menu_items {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .header_menu_items li a {
+    font-size: 14px;
+    /* уменьшаем шрифт для экономии места */
+  }
+}
+
+
+/* --- АДАПТАЦИЯ HEADER ДЛЯ МОБИЛЬНЫХ ВЕРСИЙ (Все в столбик) --- */
+@media (max-width: 767px) {
+  .header {
+    flex-direction: column;
+    /* Выстраиваем колонки вертикально */
+    align-items: center;
+    text-align: center;
+    gap: 25px;
+    padding: 20px 10px;
+  }
+
+  /* Сбрасываем flex-настройки колонок */
+  .header_images,
+  .header_contacts,
+  .header_menu {
+    flex: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Порядок: Логотип -> Контакты -> Меню */
+  .header_images {
+    order: 1;
+  }
+
+  .header_contacts {
+    order: 2;
+  }
+
+  .header_menu {
+    order: 3;
+  }
+
+  .header_menu_items {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+
+  .header_menu_items li {
+    width: 100%;
+  }
+
+  .header_menu_items li a {
+    display: block;
+    padding: 12px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .header_menu_items li:last-child a {
+    border-bottom: none;
+  }
+}
+
+
+/* --- РАБОТА С ОСНОВНЫМ СОДЕРЖАНИЕМ --- */
+
+
+
+
+/* ---  ГЛАВНЫЙ КОНТЕЙНЕР --- */
+.main {
+  max-width: 1440px;
+  /* Добавляем width: 100%, чтобы на маленьких экранах блок сужался */
+  width: 100%;
+  margin: 0 auto;
+  /* Центрируем на больших мониторах */
+  box-sizing: border-box;
+}
+
+/* КАРТИНКА  */
+.center_view img {
+  width: 100%;
+  /* чтобы занимала 100% от текущей ширины .main */
+  max-width: 100%;
+  /* чтобы картинка не вышла  за границы */
+  display: block;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+
+/* РАБОТА С СЕКЦИЕЙ  "О нас"  */
+
+.about_us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Центрируем текст внтури блока */
+
+  max-width: 750px;
+  width: 100%;
+  /* Чтобы блок был адаптивным на телефонах */
+
+  /* центрирование самого блока */
+  margin-left: auto;
+  margin-right: auto;
+  color: #333;
+}
+
+.about_us_hello {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.about_us_text {
+  font-weight: normal;
+  font-size: 1.2rem;
+}
+
+.about_us_signature {
+  font-style: italic;
+  align-self: flex-end;
+  text-align: right;
+  font-size: 1.2rem;
+}
+
+/* --- АДАПТАЦИЯ СЕКЦИИ "О нас" ДЛЯ МОБИЛЬНЫХ ВЕРСИЙ (до 768px) --- */
+
+@media (max-width: 768px) {
+  .about_us {
+    /* Добавляем боковые отступы, чтобы текст не лип к краям экрана */
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  .about_us_hello {
+    text-align: center;
+    font-size: 1.3rem;
+    /* Чуть уменьшаем шрифт для маленьких экранов */
+    margin-bottom: 15px;
+  }
+
+  .about_us_text {
+    text-align: center;
+    /* Текст статьи тоже центрируем на мобилках */
+    font-size: 1.1rem;
+    line-height: 1.5;
+    /* Увеличиваем межстрочный интервал для читабельности */
+  }
+
+  .about_us_signature {
+    /* Сбрасываем десктопное прижатие вправо и центрируем */
+    align-self: center;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 20px;
+  }
+}
+
+
+
+
+
+/* РАБОТА С СЕКЦИЕЙ ПОРТФОЛИО */
+
+
+/* Контейнер-рамка, который скрывает лишние фото */
+.portfolio {
+  width: 100%;
+  overflow: hidden;
+  /* Чтобы картинки не вылезали за пределы секции */
+  padding: 20px 0;
+}
+
+.portfolio_title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+/* Сама лента с картинками */
+.portfolio_carousel {
+  overflow: hidden;
+  /* Скрываем всё, что выходит за границы */
+  white-space: nowrap;
+  position: relative;
+  padding: 40px 0;
+}
+
+.portfolio_track {
+  display: flex;
+  width: max-content;
+  animation: scrollPortfolio 40s linear infinite;
+  /* Непрерывное движение */
+}
+
+.portfolio_track img {
+  height: 300px;
+  /* Фиксированная высота для стройности ряда */
+  width: auto;
+  margin-right: 20px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Остановка при наведении, чтобы рассмотреть фото */
+.portfolio_carousel:hover .portfolio_track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollPortfolio {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+
+  /* Сдвигаем на половину (так как контент дублирован) */
+}
+
+
+
+
+
+
+/* РАБОТА С КОНТЕЙНЕРОМ  УСЛУГ И СОВЕТОВ */
+
+.main_container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  /* Расстояние между услугами и советами */
+  max-width: 1440px;
+  margin: 0 auto;
+  /*padding: 20px;*/
+}
+
+/* --- АДАПТАЦИЯ КОНТЕЙНЕРА УСЛУГ И СОВЕТОВ ДЛЯ МОБИЛЬНЫХ ( в вертикальную колонку) (до 768px) --- */
+
+@media (max-width: 767px) {
+  .main_container {
+    flex-direction: column;
+    /* Выстраиваем блоки в колонку */
+    gap: 3rem;
+    /* расстояние между услугами и советами по вертикали */
+    padding: 0 15px;
+    /* Добавляем боковые отступы, чтобы контент не лип к краям */
+  }
+
+  /* Чтобы Услуги и Советы занимали всю ширину экрана смартфона */
+  .services,
+  .advice {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+/* РАБОТА С БЛОКОМ УСЛУГИ */
+
+.services {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.services_title {
+  width: 100%;
+  /* Растягиваем на весь родительский блок */
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+
+/* Основной контейнер блока услуги */
+.service_block {
+  background: #f1e78e9c;
+  border: 1px solid #d4c55a;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* Мягкая тень */
+  transition: all 0.3s ease;
+  /* Плавность всех изменений */
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Эффект при наведении курсора */
+.service_block:hover {
+  background: #f1e78e;
+  /* Становится ярче */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  /* Тень глубже */
+  transform: translateY(-5px);
+  /* Блок «подпрыгивает» вверх */
+}
+
+/* Эффект при клике  */
+.service_block:active {
+  background: #fff066;
+  /* Еще ярче при клике */
+  transform: translateY(-2px);
+  /* Чуть опускается обратно */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Шапка аккордеона */
+.service_header {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  outline: none;
+}
+
+.service_header::-webkit-details-marker {
+  display: none;
+}
+
+.service_title {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Таблица внутри */
+.price_table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.5);
+  /* Полупрозрачный фон для читаемости текста */
+}
+
+.price_table th {
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 12px 10px;
+  font-weight: bold;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.price_table td {
+  padding: 15px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  vertical-align: top;
+}
+
+.col-package {
+  width: 25%;
+  font-weight: bold;
+}
+
+.col-description {
+  width: 55%;
+  font-size: 0.95em;
+}
+
+.col-price {
+  width: 20%;
+  text-align: right;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* --- АДАПТИВНОСТЬ АККОРДИОНА ДЛЯ МОБИЛЬНОЙ ВЕРСИИ --- */
+@media (max-width: 650px) {
+  .price_table thead {
+    display: none;
+  }
+
+  .price_table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .col-price {
+    text-align: left;
+    color: #b18c00;
+    padding-bottom: 20px;
+  }
+}
+
+
+
+
+
+
+/* РАБОТА С SIDEBAR СОВЕТЫ */
+
+.sidebar_tips {
+  flex: 1;
+  padding: 20px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
+  height: fit-content;
+  max-width: 350px;
+  min-width: 250px;
+  /* Минимальная ширина для планшетов */
+}
+
+.tips_title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-weight: bold;
+  color: #555;
+}
+
+.tips_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.tip_link {
+  text-decoration: none;
+  color: #333;
+  /* Изначальный цвет как у услуг */
+  background: #f1e78e9c;
+  padding: 10px 18px;
+  border: 1px solid #d4c55a;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  /* Тень как у блоков услуг */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Эффект разбросанности  */
+.tip_link:nth-child(odd) {
+  transform: rotate(-2deg);
+}
+
+.tip_link:nth-child(even) {
+  transform: rotate(3deg);
+}
+
+.tip_link:nth-child(3n) {
+  transform: rotate(-4deg) translateY(5px);
+}
+
+.tip_link:nth-child(4n) {
+  transform: rotate(1deg) translateY(-3px);
+}
+
+/* Эффект при наведении (как у услуг: ярче + подпрыгивание + выравнивание) */
+.tip_link:hover {
+  background: #f1e78e !important;
+  /* Яркий желтый */
+  transform: rotate(0deg) translateY(-5px) scale(1.05) !important;
+  z-index: 10;
+  color: #000;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-color: #b18c00;
+}
+
+/* Эффект при клике */
+.tip_link:active {
+  background: #fff066 !important;
+  /* Максимально яркий */
+  transform: rotate(0deg) translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tip_icon {
+  font-size: 1.2rem;
+}
+
+
+/* --- АДАПТИВНОСТЬ SIDEBAR СОВЕТЫ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ --- */
+@media (max-width: 767px) {
+  .sidebar_tips {
+    position: static;
+    /* Отключаем прилипание */
+    max-width: 100%;
+    /* Позволяем растягиваться */
+    margin: 0 auto;
+    /* Центрируем блок */
+    display: flex;
+    /* Включаем флекс для центровки содержимого */
+    flex-direction: column;
+    align-items: center;
+    /* Центрируем заголовок и список внутри */
+    text-align: center;
+  }
+
+  .tips_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Центрируем сами кнопки */
+    width: 100%;
+  }
+}
+
+
+
+
+/* РАБОТА С POPUP */
+
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  max-width: 550px;
+  width: 90%;
+  position: relative;
+  border: 1px solid #d4c55a;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  animation: popupSlide 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes popupSlide {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.popup-icon {
+  font-size: 2rem;
+}
+
+#popupTitle {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  color: #555;
+  margin: 0;
+}
+
+.popup-body {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-btn:hover {
+  color: #d4c55a;
+}
+
+
+
+
+
+
+
+/* РАБОТА С СЕКЦИЕЙ PROMO ACTIONS */
+
+.promo-header {
+  text-align: center;
+  margin-bottom: 40px;
+  /* Отступ до карточек */
+}
+
+.main-promo-title {
+  font-size: 2.5rem;
+  color: #222;
+  /*text-transform: uppercase;*/
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.title-underline {
+  width: 60px;
+  height: 4px;
+  background: #ff4757;
+  margin: 0 auto;
+}
+
+/* Контейнер раздела */
+.promo-section {
+
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  /* Выстраиваем элементы вертикально */
+  align-items: center;
+  /* Центрируем заголовок и карточку по горизонтали */
+  font-family: 'Arial', sans-serif;
+}
+
+/* Карточка акции */
+.promo-card {
+  display: flex;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.promo-card:hover {
+  transform: translateY(-5px);
+  /* Эффект при наведении */
+}
+
+/* Блок с картинкой */
+.promo-image {
+  flex: 1;
+  position: relative;
+  min-width: 300px;
+}
+
+.promo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Яркий шильдик на фото */
+.promo-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #ff4757;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 50px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+/* Текстовый блок */
+.promo-content {
+  flex: 1.2;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.promo-title {
+  font-size: 1.75rem;
+  margin: 0 0 15px 0;
+  color: #2f3542;
+  line-height: 1.2;
+}
+
+.promo-description {
+  font-size: 16px;
+  color: #57606f;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.promo-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+  font-size: 14px;
+  color: #2f3542;
+}
+
+
+/* Кнопка (оставить - может еще понадобиться */
+/*.promo-button {
+  display: inline-block;
+  text-align: center;
+  background: #2ed573;
+  
+  color: #fff;
+  text-decoration: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.promo-button:hover {
+  background: #26af5f;
+}
+
+*/
+
+/*  --- АДАПТИВНОСТЬ СЕКЦИИ АКЦИИ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ --- */
+@media (max-width: 768px) {
+  .main-promo-title {
+    font-size: 1.8rem;
+    /* Уменьшаем главный заголовок */
+  }
+
+  .promo-card {
+    flex-direction: column;
+    /* Картинка сверху, текст снизу */
+    width: 100%;
+    /* Карточка на всю ширину */
+    max-width: 450px;
+  }
+
+  .promo-image {
+    min-width: unset;
+    /* Сбрасываем десктопное ограничение */
+    height: 250px;
+    /* Фиксируем высоту фото на мобильном */
+  }
+
+  .promo-content {
+    padding: 25px;
+    /* Уменьшаем внутренние отступы текста */
+    text-align: center;
+    /* Центрируем текст для красоты */
+  }
+
+  .promo-features {
+    text-align: left;
+    /* выравнивание по левому краю */
+    display: inline-block;
+    /* Чтобы список сам центрировался как блок */
+    margin: 0 auto 20px;
+  }
+}
+
+
+
+
+
+
+
+
+/* РАБОТА С РАЗДЕЛОМ ОТЗЫВЫ */
+
+.reviews-carousel_title {
+  text-align: center;
+  /* Центрирует текст внутри блока */
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  /* отступ снизу для красоты */
+  width: 100%;
+  /* чтобы заголовок занимал всю ширину */
+}
+
+/* Адаптация размера шрифта для мобильных */
+@media (max-width: 768px) {
+  .reviews-carousel_title {
+    font-size: 1.8rem;
+    /* Уменьшаем шрифт на маленьких экранах */
+    padding: 0 15px;
+    /* Чтобы текст не упирался в края экрана */
+  }
+}
+
+
+.reviews-carousel {
+  padding: 60px 0;
+  /*background: #f8f9fa;*/
+}
+
+.review-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #FFD700;
+  /* тень */
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.15);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* сделаем рамку ярче при наведении */
+.review-card:hover {
+  border-color: #FFC107;
+  box-shadow: 0 8px 20px rgba(255, 215, 0, 0.25);
+  transform: translateY(-3px);
+}
+
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.client-name {
+  display: block;
+  font-weight: 700;
+  color: #333;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.review-source {
+  font-size: 11px;
+  background: #eef2f3;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.review-rating {
+  color: #ffc107;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.review-text {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+
+
+/* НАСТРОЙКА SWIPER */
+
+/* разрешаем вылет элементов за границы */
+.reviewSwiper {
+  position: relative;
+  /* Увеличиваем боковые отступы, чтобы стрелки не касались текста */
+  padding: 20px 60px 50px 60px !important;
+  /* позволяем рамкам и теням быть видимыми */
+  overflow: visible !important;
+}
+
+/* чтобы overflow: visible не создал горизонтальный скролл на странице, 
+      ограничим родительскую секцию */
+.reviews-carousel {
+  overflow: hidden;
+  padding: 60px 0;
+}
+
+/* Настройка внешнего вида ЗОЛОТЫХ кнопок */
+.swiper-button-next,
+.swiper-button-prev {
+  /* Основной цвет стрелки - золотой */
+  --swiper-navigation-color: #FFD700;
+  background-color: #ffffff;
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50%;
+  /* Золотая рамка в тон карточкам */
+  border: 2px solid #FFD700;
+  box-shadow: 0 4px 10px rgba(212, 197, 90, 0.2);
+  transition: all 0.3s ease;
+  z-index: 20;
+}
+
+/* Настройка самой "птички" внутри */
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+/* Эффект при наведении (Инверсия в золото) */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: #FFD700;
+  /* Фон становится золотым */
+  --swiper-navigation-color: #ffffff;
+  /* Стрелка становится белой */
+  border-color: #FFD700;
+  transform: scale(1.1);
+  /* Теплое золотистое свечение */
+  box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
+}
+
+/* Позиционирование (выносим их в зоны padding, чтобы не наезжали на текст) */
+.swiper-button-prev {
+  left: 15px !important;
+}
+
+.swiper-button-next {
+  right: 15px !important;
+}
+
+
+
+
+
+
+
+/* РАБОТА С FOOTER КОНТАКТЫ  */
+
+.contact-page {
+  max-width: 1440px;
+  width: 100%;
+  /* Позволяем сжиматься на маленьких экранах */
+  margin: 0 auto;
+  /* Центрируем блок на странице */
+  padding: 20px;
+  /* Внутренние отступы, чтобы контент не касался краев */
+  box-sizing: border-box;
+  /* Чтобы padding не увеличивал общую ширину */
+}
+
+.contact-title {
+  text-align: center;
+  margin: 40px 0;
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.map-container {
+  width: 100%;
+  /* Контейнер карты занимает всю ширину футера */
+  margin-top: 20px;
+  /* Отступ от заголовка */
+}
+
+.map-container iframe {
+  display: block;
+  /* Убираем лишние зазоры снизу */
+  border-radius: 12px;
+  /* скруглим углы карты для красоты */
+}
+
+
+.info-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* Для корректного отображения на мобильных */
+}
+
+.info-item {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 20px;
+}
+
+.info-item h3 {
+  border-bottom: 2px solid #ffcc00;
+  /* Акцентный цвет фотоцентра */
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.info-item p,
+.info-item a {
+  color: #666;
+  text-decoration: none;
+  line-height: 1.6;
+  font-weight: bold;
+}
+
+/* --- АДАПТИВНОСТЬ FOOTER ДЛЯ МОБИЛЬНОЙ ВЕРСИИ --- */
+@media (max-width: 768px) {
+  .info-container {
+    flex-direction: column;
+  }
+}

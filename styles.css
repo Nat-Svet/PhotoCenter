@@ -133,6 +133,9 @@ header {
   gap: 20px;
   flex-wrap: nowrap;
   /* запрещает перенос элементов на новую строку */
+
+   position: relative; /* для работы z-index */
+    z-index: 1;         /* Любое число больше 0, чтобы быть над body::after */
 }
 
 .header_menu_items li a {
@@ -143,6 +146,9 @@ header {
   white-space: nowrap;
   /* Запрещает перенос слов внутри одной ссылки */
   transition: all 0.3s ease;
+
+  display: inline-block; /* чтобы применился transform/translate) */
+  transition: transform 0.3s ease; /* Для плавности */
 }
 
 .header_menu_items li a:hover {

@@ -9,23 +9,35 @@ html {
   /* плавная прокрутка  при клике на пункт меню */
 }
 
-
 body {
-  background-image: url('assets/images/background/overall_background.jpg');
-  background-repeat: repeat;
-  background-attachment: fixed;
-
-  /* Увеличиваем прозрачность до 0.97 — паттерн станет едва уловимым призраком */
-  background-color: rgba(255, 253, 235, 0.94);
-
-  /* SCREEN —  для максимального осветления пестрых текстур (у меня пестрый background image) */
-  background-blend-mode: screen;
-
-  color: #1a1a1a;
-  margin: 0;
-  width: 100%;
-  font-family: sans-serif;
+    margin: 0;
+    width: 100%;
+    color: #1a1a1a;
+    font-family: sans-serif;
+    /* Убираем фон отсюда, чтобы он не конфликтовал */
+    background-color: #fffdeb; 
 }
+
+body::before {
+    content: "";
+    position: fixed; /* Заменяет background-attachment: fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    
+    /* Ваши настройки фона */
+    background-image: url('assets/images/background/overall_background.jpg');
+    background-repeat: repeat;
+    background-color: rgba(255, 253, 235, 0.94);
+    background-blend-mode: screen;
+    
+    /* Важно для корректного отображения на iOS */
+    -webkit-background-size: auto; 
+    background-size: auto;
+}
+
 
 
 /*  --- УСТАНАВЛИВАЕМ ОБЩУЮ ШИРИНУ ВСЕХ БЛОКОВ СТРАНИЦЫ ДЛЯ ДЕСКТОП ВЕРСИИ ---   */
